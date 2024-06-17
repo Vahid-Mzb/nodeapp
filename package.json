@@ -1,0 +1,21 @@
+{
+  "name": "node-app",
+  "description": "Nodeapp for CICD test",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "chai-http": "^5.0.0",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.0.0",
+    "supertest": "^6.2.3"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha"
+  }
+}
