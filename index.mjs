@@ -13,6 +13,4 @@ app.get("/ready", (req, res) => {
   res.json({ response: "Great!, It works!" });
 });
 
-app.listen(process.env.PORT || 3000);
-
 export default app;
