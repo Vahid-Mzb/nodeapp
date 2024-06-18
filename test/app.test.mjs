@@ -1,14 +1,24 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
-import app from "../index.mjs"; // Ensure the path matches the location of your server file
+import app from "../index.mjs"; // Adjust path if necessary
 const { expect } = chai;
 
 chai.use(chaiHttp);
 
 describe("Node Server", function () {
+  let server;
+
+  before(done => {
+    server = app.listen(3000, done); // Start server on port 3000 for testing
+  });
+
+  after(done => {
+    server.close(done); // Close server after tests
+  });
+
   it("should return Hello From Vahid on / GET", function (done) {
     chai
-      .request(app)
+      .request(server) // Use the server instance, not 'app'
       .get("/")
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -20,7 +30,7 @@ describe("Node Server", function () {
 
   it("should return Hello World on /will GET", function (done) {
     chai
-      .request(app)
+      .request(server) // Use the server instance, not 'app'
       .get("/will")
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -32,7 +42,7 @@ describe("Node Server", function () {
 
   it("should return Great!, It works! on /ready GET", function (done) {
     chai
-      .request(app)
+      .request(server) // Use the server instance, not 'app'
       .get("/ready")
       .end((err, res) => {
         expect(res).to.have.status(200);
