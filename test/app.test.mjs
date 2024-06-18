@@ -1,6 +1,6 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
-import app from "../index.mjs"; // Adjust path if necessary
+import app from "../index.mjs"; // Ensure the path matches the location of your server file
 const { expect } = chai;
 
 chai.use(chaiHttp);
@@ -9,16 +9,28 @@ describe("Node Server", function () {
   let server;
 
   before(done => {
-    server = app.listen(3000, done); // Start server on port 3000 for testing
+    server = app.listen(3000, () => {
+      console.log('Test server started on port 3000');
+      done();
+    });
   });
 
   after(done => {
-    server.close(done); // Close server after tests
+    // Check if server is running before trying to close it
+    if (server && server.listening) {
+      server.close(() => {
+        console.log('Test server stopped');
+        done();
+      });
+    } else {
+      console.log('Server was not running');
+      done();
+    }
   });
 
   it("should return Hello From Vahid on / GET", function (done) {
     chai
-      .request(server) // Use the server instance, not 'app'
+      .request(server)
       .get("/")
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -30,7 +42,7 @@ describe("Node Server", function () {
 
   it("should return Hello World on /will GET", function (done) {
     chai
-      .request(server) // Use the server instance, not 'app'
+      .request(server)
       .get("/will")
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -42,7 +54,7 @@ describe("Node Server", function () {
 
   it("should return Great!, It works! on /ready GET", function (done) {
     chai
-      .request(server) // Use the server instance, not 'app'
+      .request(server)
       .get("/ready")
       .end((err, res) => {
         expect(res).to.have.status(200);
