@@ -1,4 +1,5 @@
-import app from './index.mjs';
+// server.mjs
+import app from "./index.mjs";
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
