@@ -8,22 +8,22 @@ chai.use(chaiHttp);
 describe("Node Server", function () {
   let server;
 
-  before(done => {
-    server = app.listen(3000, () => {
-      console.log('Test server started on port 3000');
+  before((done) => {
+    server = app.listen(4000, () => {
+      console.log("Test server started on port 4000");
       done();
     });
   });
 
-  after(done => {
+  after((done) => {
     // Check if server is running before trying to close it
     if (server && server.listening) {
       server.close(() => {
-        console.log('Test server stopped');
+        console.log("Test server stopped");
         done();
       });
     } else {
-      console.log('Server was not running');
+      console.log("Server was not running");
       done();
     }
   });
